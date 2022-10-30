@@ -84,6 +84,22 @@ export type CategoryItem = {
   cursor: string;
   image?: string;
 };
+ 
+export type SubItem = {
+  title: string,
+}
+export type MainMenuSubItem = {
+  title: string;
+  id: string;
+  resourceId: string
+  type: string;
+  url?: string;
+  items:Array<SubItem>
+}
+export type MainMenuItem = {
+  id: string;
+  items: Array<MainMenuSubItem>;
+}
 
 export type LocalData = {
   authenticatedUser: AuthenticatedUser;

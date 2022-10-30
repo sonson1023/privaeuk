@@ -2,7 +2,7 @@ import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
 import { RouteProp as RoutePropBase } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { AddressItem, Cart, CategoryItem, OrderRecord } from './types';
+import { AddressItem, Cart, CategoryItem, MainMenuItem, OrderRecord } from './types';
 
 export type StackNavProp<T extends keyof StackParamList> = StackNavigationProp<
   StackParamList,
@@ -52,6 +52,7 @@ export type StackParamList = {
   LockScene: undefined;
   OrderPlacedConfirmation: { orderNumber: string };
   WebView: { webUrl: string; type: 'terms' | 'policy' | 'payment' };
+  MainMenu: {menu:MainMenuItem};
 };
 
 export type TabParamList = {

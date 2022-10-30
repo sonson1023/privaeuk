@@ -31,6 +31,10 @@ import {
 import { StackParamList } from '../types/Navigation';
 
 import TabNavigator from './TabNavigator';
+import { useProductsAndCategoriesQuery } from '../hooks/api/useCollection';
+import MainMenuScene from '../scenes/MainMenuScene';
+
+import useMainMenu from '../hooks/api/useMainMenu';
 
 const Stack = createStackNavigator<StackParamList>();
 
@@ -73,6 +77,9 @@ export default function StackNavigator() {
   let { data: userData } = useGetAuthenticatedUser();
   let { isRTL } = useTheme();
 
+
+  let { data: mainMenu, loading, } = useMainMenu();
+
   function getTabSceneName(route: Pick<Route<string>, 'key' | 'name'>) {
     const routeName = getFocusedRouteNameFromRoute(route) || 'HomeTab';
     return routeName;
@@ -93,13 +100,18 @@ export default function StackNavigator() {
             return {
               title:
                 authToken && userData?.authenticatedUser.firstName
-                  ? `${t('Hello')}, ${userData.authenticatedUser.firstName}`
-                  : t('Hello'),
-              headerLeft: () => <LocalizationPicker />,
+                  ? `${t('Hello Guest!')}, ${userData.authenticatedUser.firstName}`
+                  : t('Hello Guest!'),
+              // headerLeft: () => <LocalizationPicker />,
+              headerLeft: () => <HeaderIconButton
+                icon="menu"
+                onPress={() => navigation.navigate('MainMenu', mainMenu)} />,
               headerRight: () => (
                 <HeaderIconButton
                   icon="cart"
-                  onPress={() => navigation.navigate('ShoppingCart')}
+                  onPress={() => navigation.navigate('ShoppingCart', {
+
+                  })}
                 />
               ),
               headerStyle: {
@@ -115,23 +127,23 @@ export default function StackNavigator() {
           } else {
             return authToken
               ? {
-                  headerLeft: () => null,
-                  title: t('My Profile'),
-                }
+                headerLeft: () => null,
+                title: t('My Profile'),
+              }
               : {
-                  headerLeft: () =>
-                    !authToken && (
-                      <HeaderIconButton
-                        icon={isRTL ? 'chevron-right' : 'chevron-left'}
-                        onPress={() => navigation.navigate('HomeTab')}
-                      />
-                    ),
-                  title: '',
-                  headerStyle: {
-                    shadowColor: COLORS.transparent,
-                    elevation: 0,
-                  },
-                };
+                headerLeft: () =>
+                  !authToken && (
+                    <HeaderIconButton
+                      icon={isRTL ? 'chevron-right' : 'chevron-left'}
+                      onPress={() => navigation.navigate('HomeTab')}
+                    />
+                  ),
+                title: '',
+                headerStyle: {
+                  shadowColor: COLORS.transparent,
+                  elevation: 0,
+                },
+              };
           }
         }}
       />
@@ -239,6 +251,9 @@ export default function StackNavigator() {
           headerLeft: () => null,
         })}
       />
+      <Stack.Screen name="MainMenu" component={MainMenuScene} options={() => ({
+        title: t('Menu'),
+      })} />
     </Stack.Navigator>
   );
 }

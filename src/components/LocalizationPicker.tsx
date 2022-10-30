@@ -15,6 +15,7 @@ import { Text } from '../core-ui';
 import useDefaultCountry from '../hooks/api/useDefaultCountry';
 import useLocalization from '../hooks/api/useLocalization';
 
+// 통화 선택
 export default function CurrencyPicker() {
   let [visible, setVisible] = useState(false);
   let {

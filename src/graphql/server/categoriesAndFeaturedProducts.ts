@@ -75,3 +75,22 @@ export const GET_FEATURED_PRODUCTS_AND_CATEGORIES = gql`
     }
   }
 `;
+ 
+export const Get_Main_Menu = gql`
+  query GetMainMenu{
+    menu(handle: "main-menu")  {
+      id
+      items {
+        title
+        tags
+        id
+        resourceId
+        type
+        url
+        items {
+          title
+        }
+      }
+    }
+  }
+`;

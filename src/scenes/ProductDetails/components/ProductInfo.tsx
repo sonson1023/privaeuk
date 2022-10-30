@@ -54,6 +54,13 @@ export default function ProductInfo(props: Props) {
     });
   }
 
+  const parsing = (text?: string) => {
+    if (text) {
+
+    }
+    return text
+  }
+
   useEffect(() => {
     if (quantity === 0) {
       onChangeQuantity(1);
@@ -88,7 +95,7 @@ export default function ProductInfo(props: Props) {
           containerStyle={[outlinedTextInput, styles.textInputWidth]}
           style={outlinedTextInput}
           value={quantity.toString()}
-          onBlur={() => {}}
+          onBlur={() => { }}
           onChangeText={(value: string) =>
             onChangeQuantity(
               valueBetweenZeroToMax(parseInt(value, 10), quantityAvailable),
@@ -99,7 +106,7 @@ export default function ProductInfo(props: Props) {
       </View>
       <View style={[styles.paddingHorizontal, styles.description]}>
         <Text style={styles.labelStyle}>{t('Description')}</Text>
-        <Text>{description || t('No description')}</Text>
+        <Text selectable={true}>{description || t('No description')}</Text>
       </View>
     </>
   );

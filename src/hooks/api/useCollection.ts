@@ -250,4 +250,37 @@ function useProductsAndCategoriesQuery(first: number) {
   };
 }
 
-export { useCollectionQuery, useProductsAndCategoriesQuery };
+function useCategories() {
+  let [categories, setCategories] = useState<Array<CategoryItem>>([]);
+  
+
+  let { data, error, loading, refetch: refetchQuery } = useQuery<
+    GetFeaturedProductsAndCategories  >(GET_FEATURED_PRODUCTS_AND_CATEGORIES, {
+    notifyOnNetworkStatusChange: true,
+    fetchPolicy: 'no-cache',
+  });
+  useEffect(() => {
+    if (!loading) {
+      
+    }
+    if (!!data) {
+        
+      let categories: Array<CategoryItem> = data.collections.edges.map(
+        (item) => ({
+          id: item.node.id,
+          title: item.node.title,
+          handle: item.node.handle,
+          cursor: item.cursor,
+          image: item.node.image?.transformedSrc || undefined,
+        }),
+      );
+      setCategories(categories);
+ 
+    }
+  }, [loading,]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return {categories}
+}
+
+
+export { useCollectionQuery, useProductsAndCategoriesQuery,useCategories };
